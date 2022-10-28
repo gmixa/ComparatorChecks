@@ -1,11 +1,12 @@
-import cats._
-import cats.implicits._
+import cats.*
+import cats.implicits.*
 import cats.kernel.laws.discipline.OrderTests
-import org.scalacheck._
+import org.scalacheck.*
 import org.scalacheck.rng.Seed
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.prop.Configuration
 import org.typelevel.discipline.scalatest.FunSuiteDiscipline
+import tests.MyTestClass
 
 import scala.math.Ordering
 
@@ -23,8 +24,8 @@ class MyTestClassSpec extends AnyFunSuite with FunSuiteDiscipline with Configura
 
   import scala.math.Ordering._
 
-  val myOrdering : Ordering[MyTestClass]= comparatorToOrdering(MyTestClass.Comparators.BUGGY.reversed())
+  val myOrdering : Ordering[MyTestClass]= comparatorToOrdering(MyTestClass.Comparators.DEFAULT.reversed())
 
   implicit val catsMyTestClassorder : Order[MyTestClass] = Order.fromOrdering(myOrdering)
-  checkAll("MyTestClass.OrderLaws",OrderTests[MyTestClass].order)
+  checkAll("tests.MyTestClass.OrderLaws",OrderTests[MyTestClass].order)
 }
