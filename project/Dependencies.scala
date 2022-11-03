@@ -9,6 +9,7 @@ object Dependencies {
     val disciplineScalaCheck = "2.2.0"
     val guava = "31.1-jre"
     val reflections = "0.10.2"
+    val classgraph = "4.8.149"
   }
 
   object Libraries {
@@ -22,7 +23,7 @@ object Dependencies {
     lazy val catsKernelLaws = "org.typelevel" %% "cats-kernel-laws" % Version.cats
     lazy val guava = "com.google.guava" % "guava" % Version.guava
     lazy val reflections = "org.reflections" % "reflections" % Version.reflections
-
+    lazy val classgraph = "io.github.classgraph" % "classgraph" % Version.classgraph
   }
 
 }

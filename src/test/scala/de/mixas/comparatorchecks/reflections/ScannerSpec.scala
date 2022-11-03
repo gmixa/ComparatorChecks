@@ -1,5 +1,6 @@
-package de.mixas.comparatorchecks
+package de.mixas.comparatorchecks.reflections
 
+import de.mixas.comparatorchecks.refelections.Scanner
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 
@@ -18,7 +19,7 @@ class ScannerSpec extends AnyFlatSpec with should.Matchers{
   }
 
   it should "find the classes implementing Comparator in the package 'de' " in {
-    val scanner = Scanner("tests.comparatorIsAttribute")
+    val scanner = Scanner("tests")
     val found = scanner.allComparators()
     found.size should be (3)
   }

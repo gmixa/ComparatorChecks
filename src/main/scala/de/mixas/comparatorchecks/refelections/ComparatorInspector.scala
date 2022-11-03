@@ -1,6 +1,6 @@
-package de.mixas.comparatorchecks
+package de.mixas.comparatorchecks.refelections
 
-import java.lang.reflect.{Field, Modifier, ParameterizedType, Type}
+import java.lang.reflect.{ParameterizedType, Type}
 import java.util.Comparator
 
 object ComparatorInspector:

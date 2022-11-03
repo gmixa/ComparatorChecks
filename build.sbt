@@ -16,5 +16,6 @@ libraryDependencies ++= Seq(
   Libraries.catsLaws                % Test,
   Libraries.catsKernelLaws          % Test,
   Libraries.guava,
-  Libraries.reflections
+  Libraries.reflections,
+  Libraries.classgraph
 )

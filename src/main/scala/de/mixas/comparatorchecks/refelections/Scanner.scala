@@ -1,4 +1,4 @@
-package de.mixas.comparatorchecks
+package de.mixas.comparatorchecks.refelections
 
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
@@ -26,7 +26,6 @@ end Scanner
 
 object Scanner:
   def apply(reflections : Reflections) : Scanner=
-    reflections.save("test.json")
     require(reflections != null, "reflections must not be null!")
     new Scanner(reflections)
   def apply(packageName : String) : Scanner=
