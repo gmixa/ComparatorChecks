@@ -15,7 +15,5 @@ libraryDependencies ++= Seq(
   Libraries.disciplineScalaCheck    % Test,
   Libraries.catsLaws                % Test,
   Libraries.catsKernelLaws          % Test,
-  Libraries.guava,
-  Libraries.reflections,
   Libraries.classgraph
 )
