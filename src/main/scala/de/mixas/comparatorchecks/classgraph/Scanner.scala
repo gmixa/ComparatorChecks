@@ -1,7 +1,6 @@
 package de.mixas.comparatorchecks.classgraph
 
 import io.github.classgraph.*
-import sun.reflect.generics.tree.FieldTypeSignature
 
 import java.lang.Comparable
 import java.lang.reflect.{ParameterizedType, Type, Field as JField}
