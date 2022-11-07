@@ -17,4 +17,8 @@ public class ComparatorIsAttribute {
     public void setComparatorAttribute(Comparator<Integer> comparatorAttribute){
         this.comparatorAttribute = comparatorAttribute;
     }
+
+    void doSomthing(){
+        comparatorAttribute = (Integer a, Integer b) -> a - b;
+    }
 }

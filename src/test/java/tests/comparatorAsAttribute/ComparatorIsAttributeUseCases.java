@@ -1,5 +1,7 @@
 package tests.comparatorAsAttribute;
 
+import scala.Int;
+
 import java.util.Comparator;
 
 public class ComparatorIsAttributeUseCases {
@@ -18,4 +20,5 @@ public class ComparatorIsAttributeUseCases {
         ComparatorIsAttribute test = new ComparatorIsAttribute();
         test.setComparatorAttribute( (Integer x, Integer y) -> y - x);
     }
+
 }
