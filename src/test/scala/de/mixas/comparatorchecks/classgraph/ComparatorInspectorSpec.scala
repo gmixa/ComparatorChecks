@@ -2,15 +2,16 @@ package de.mixas.comparatorchecks.classgraph
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
-import tests.{MyIntComparator, MyTestClass}
+import tests.{MyIntComparator, MyTestClass, MyTestClassComparator}
 
 import java.util.Comparator
 
 class ComparatorInspectorSpec extends AnyFlatSpec with should.Matchers{
 
   "ComparatorInspector" should "return 'java.lang.Integer' type for an Comparator[Int]" in {
-    val tpe = ComparatorInspector.comparatorType(classOf[MyIntComparator])
-    tpe.get should equal(classOf[java.lang.Integer])
+    val comparatorInspector = ComparatorInspector("tests")
+    val tpe = comparatorInspector.comparatorType(classOf[MyTestClassComparator])
+    tpe.get.get should equal(classOf[tests.MyTestClass])
   }
 
 }

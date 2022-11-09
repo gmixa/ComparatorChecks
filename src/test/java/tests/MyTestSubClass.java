@@ -2,14 +2,14 @@ package tests;
 
 public class MyTestSubClass extends MyTestClass {
 
-    private final int a;
+    private final int l;
 
-    public MyTestSubClass(int x, int y, int a) {
+    public MyTestSubClass(final int x, final int y, final int l) {
         super(x, y);
-        this.a = a;
+        this.l = l;
     }
 
-    public int getA() {
-        return a;
+    public int getL() {
+        return l;
     }
 }

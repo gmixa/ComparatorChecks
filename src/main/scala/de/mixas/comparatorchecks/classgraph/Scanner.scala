@@ -10,12 +10,7 @@ import scala.annotation.static
 import scala.jdk.CollectionConverters.*
 import scala.util.{Try, Using}
 
-private class Scanner(packageName: String):
-
-  private final def using[T]: (ScanResult => T) => Try[T] = Using(
-    new ClassGraph().enableAllInfo().acceptPackages(packageName,"java.lang.*")
-      .scan()
-  )
+private class Scanner(packageName: String) extends Scanning(packageName):
 
   def allComparable(): Try[Set[Class[_ <: Comparable[_]]]] = using {
     scanResult =>
@@ -120,14 +115,10 @@ private class Scanner(packageName: String):
       end match
   end className
 
-
-
-
-
-
 object Scanner:
   def apply(packageName: String): Scanner =
     require(packageName != null, "null no legal package name")
     new Scanner(packageName)
+  end apply
 end Scanner
 

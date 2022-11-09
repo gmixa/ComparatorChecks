@@ -1,7 +1,10 @@
 package de.mixas.comparatorchecks.classgraph
 
+
 import java.lang.reflect.{Field, Modifier}
 import scala.annotation.tailrec
+import scala.jdk.CollectionConverters.*
+import scala.util.Try
 
 /**
  * Determines all fields of a class that are non static and non transient.
@@ -14,23 +17,25 @@ import scala.annotation.tailrec
  * @author Gerald Mixa
  *
  */
-object ClassAttributeInspector:
+private class ClassAttributeInspector(packageName : String) extends Scanning(packageName):
   /**
-   * Criteria for fields that we do __not__ want in our list for relevant fields of a class.
-   */
-  val nonstandardAttribute: Field => Boolean = { field =>
-    val modifiers = field.getModifiers
-    Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers)
-  }
-
-  /**
-   * determines all fields of the given java class that we have to take regard of, without evaluating the superclass chain
+   * determines all fields of the given java class that we have to take regard of.
    *
    * @param clazz java class definition
    * @return a sequence of all relevant class fields
    */
-  def attributes(clazz: Class[_]): Seq[Field] = ???
-    
-  def attributesWithSuperclass(clazz: Class[_]): Seq[Field] = ???
+  def attributes(clazz: Class[_]): Try[Seq[Field]] = using {
+    scanResult =>
+      val classes = scanResult.getAllClasses.asScala.toList
+      val classE = classes.filter(c => c.getName == clazz.getName)
+      val fields = classE.head.getFieldInfo.asScala.toList
+      fields.map(f => f.loadClassAndGetField())
+  }
+  end attributes
+end ClassAttributeInspector
 
+object ClassAttributeInspector:
+  def apply(packageName : String) : ClassAttributeInspector =
+    new ClassAttributeInspector(packageName)
+  end apply
 end ClassAttributeInspector

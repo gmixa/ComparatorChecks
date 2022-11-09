@@ -1,9 +1,27 @@
 package de.mixas.comparatorchecks.classgraph
 
+import io.github.classgraph.{ArrayTypeSignature, ClassGraph, ClassRefOrTypeVariableSignature, ClassRefTypeSignature, ClassTypeSignature, ScanResult, TypeParameter}
+
 import java.lang.reflect.{ParameterizedType, Type}
 import java.util.Comparator
+import scala.util.{Try, Using}
+import scala.jdk.CollectionConverters.*
+
+private class ComparatorInspector(packageName : String) extends Scanning(packageName):
+  def comparatorType[T <: Comparator[_ <: Any]](clazz: Class[T]): Try[Option[Type]] = using {
+    scanResult =>
+      val comparatorClass = scanResult.getClassInfo(clazz.getName)
+      val typeArgument = comparatorClass.getTypeSignatureOrTypeDescriptor.getSuperinterfaceSignatures.get(0).getTypeArguments.get(0)
+      val typeSignature = typeArgument.getTypeSignature
+      val clazzName = typeSignature match
+        case signature: ClassRefTypeSignature => signature.loadClass()
+        case _ => null
+      Some(clazzName)
+  }
+end ComparatorInspector
 
 object ComparatorInspector:
-  def comparatorType[T <: Comparator[_ <: Any]](clazz: Class[T]): Option[Type] = ???
-  
+  def apply(packageName : String) :ComparatorInspector =
+    new ComparatorInspector(packageName)
+  end apply
 end ComparatorInspector
