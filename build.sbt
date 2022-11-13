@@ -29,5 +29,8 @@ libraryDependencies ++= Seq(
   Libraries.disciplineScalaCheck    % Test,
   Libraries.catsLaws                % Test,
   Libraries.catsKernelLaws          % Test,
-  Libraries.classgraph
+  Libraries.classgraph,
+  "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",
+  "ch.qos.logback" % "logback-classic" % "1.4.4"
+
 )

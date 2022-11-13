@@ -21,7 +21,7 @@ class ScannerSpec extends AnyFlatSpec with should.Matchers{
       case Success(value) => value.size should be(2)
   }
 
-  it should "find three classes implementing Comparator in the package 'tests' " in {
+  it should "find one class implementing Comparator in the package 'tests' " in {
     val scanner = Scanner("tests.comparatorAsAttribute")
     val found = scanner.allComparators()
     found match
@@ -29,18 +29,17 @@ class ScannerSpec extends AnyFlatSpec with should.Matchers{
       case Success(value) => value.size should be(1)
   }
 
-  it should "find all methods returning a Comparator in the package 'tests' " in {
+  it should "find one field returning a Comparator in the package 'tests' " in {
     val scanner = Scanner("tests.comparatorAsAttribute")
     val found = scanner.allFieldsDefiningComparators()
     found match
       case Failure(exception) => fail(exception)
       case Success(value) =>
-        println(value)
         value.size should be(1)
   }
 
-  ignore should "find all lambdas defining a Comparator in the packafe 'tests' " in {
-    val scanner = Scanner("tests.comparatorAsAttribute")
+  it should "find two lambdas defining a Comparator in the packafe 'tests' " in {
+    val scanner = Scanner("tests")
     val found = scanner.allLambdasDefiningAComparator(true)
     found match
       case Failure(exception) => fail(exception)

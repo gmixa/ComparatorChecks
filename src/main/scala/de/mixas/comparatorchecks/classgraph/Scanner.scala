@@ -9,8 +9,8 @@ import java.util.Comparator
 import scala.annotation.static
 import scala.jdk.CollectionConverters.*
 import scala.util.{Try, Using}
-
-private class Scanner(packageName: String) extends Scanning(packageName):
+import com.typesafe.scalalogging.LazyLogging
+private class Scanner(packageName: String) extends Scanning(packageName) with LazyLogging :
 
   def allComparable(): Try[Set[Class[_ <: Comparable[_]]]] = using {
     scanResult =>
@@ -81,38 +81,51 @@ private class Scanner(packageName: String) extends Scanning(packageName):
       case _ => false
     val parameterInfo = info.getParameterInfo.toList
     val hasTwoParameter = parameterInfo.size == 2
-    val (first,second) = (parameterInfo.head,parameterInfo.tail.head)
-    val classNameOfFirstParameter =className(first)
+    val (first,second) = (parameterInfo.headOption,parameterInfo.tail.headOption)
+    val classNameOfFirstParameter = className(first)
     val classNameOfSecondParameter = className(second)
     val parametersHaveSameType = classNameOfSecondParameter == classNameOfFirstParameter
     if !formalParametersAreComparable then
       isIntReturned && hasTwoParameter && parametersHaveSameType
     else
-      isIntReturned && hasTwoParameter && parametersHaveSameType && implementsComparable(first.getTypeSignatureOrTypeDescriptor)
+      isIntReturned && hasTwoParameter && parametersHaveSameType && implementsComparable(first)
     end if
   end hasSignature
 
 
-  private def implementsComparable(signature: TypeSignature) : Boolean =
+  private def implementsComparable( methodInfo: Option[MethodParameterInfo]) : Boolean =
+    methodInfo match
+      case Some(value) => implementsComparable(value.getTypeSignature)
+      case None => false
+    end match
+  end implementsComparable
+
+
+  private def implementsComparable(signature: TypeSignature): Boolean =
     signature match
-      case signature: ClassRefTypeSignature =>
-        signature.getClassInfo.implementsInterface(classOf[Comparable[_]])
+      case sig: ClassRefTypeSignature =>
+        sig.getFullyQualifiedClassName match
+          case "java.lang.Integer" => true
+          case _ => sig.getClassInfo.implementsInterface(classOf[Comparable[_]])
+        end match
       case _ => false // jvm primitives can be compared but do not implement Comparable
     end match
   end implementsComparable
 
-  private def className(info: MethodParameterInfo) : String =
-    info.getTypeSignatureOrTypeDescriptor match
-      case signature: BaseTypeSignature =>
-        signature.getTypeStr
-      case signature: ReferenceTypeSignature => signature match
-        case signature: ArrayTypeSignature => signature.getTypeSignatureStr
-        case signature: ClassRefOrTypeVariableSignature =>
-          signature match
-           case signature: ClassRefTypeSignature => signature.getFullyQualifiedClassName
-           case signature: TypeVariableSignature => signature.getName
-        end match
-      end match
+  private def className(info: Option[MethodParameterInfo]): Option[String] =
+    info match
+      case None => None
+      case Some(info) =>
+        info.getTypeSignatureOrTypeDescriptor match
+          case signature: BaseTypeSignature => Option(signature.getTypeStr)
+          case signature: ReferenceTypeSignature =>
+            signature match
+              case sig: ArrayTypeSignature => Option(sig.getTypeSignatureStr)
+              case sig: ClassRefOrTypeVariableSignature =>
+                sig match
+                  case s: ClassRefTypeSignature => Option(s.getFullyQualifiedClassName)
+                  case s: TypeVariableSignature => Option(s.getName)
+    end match
   end className
 
 object Scanner:
