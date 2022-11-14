@@ -1,11 +1,11 @@
 package de.mixas.comparatorchecks.classgraph
 
-import io.github.classgraph.{ArrayTypeSignature, ClassGraph, ClassRefOrTypeVariableSignature, ClassRefTypeSignature, ClassTypeSignature, ScanResult, TypeParameter}
+import io.github.classgraph.*
 
 import java.lang.reflect.{ParameterizedType, Type}
 import java.util.Comparator
-import scala.util.{Try, Using}
 import scala.jdk.CollectionConverters.*
+import scala.util.{Try, Using}
 
 private class ComparatorInspector(packageName : String) extends Scanning(packageName):
   def comparatorType[T <: Comparator[_ <: Any]](clazz: Class[T]): Try[Option[Type]] = using {
