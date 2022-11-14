@@ -1,9 +1,22 @@
 import Dependencies._
-
+import sbtrelease.ReleaseStateTransformations._
 name := "ComparatorChecks"
 
-version := "0.1"
+publishTo := Some(Resolver.file("file",  new File( "." )) )
 
+releaseVersionFile := file("version.sbt")
+
+releaseProcess := Seq(
+  checkSnapshotDependencies,
+  inquireVersions,
+  runClean,
+  runTest,
+  setReleaseVersion,
+  commitReleaseVersion,
+  tagRelease,
+  setNextVersion,
+  commitNextVersion
+)
 scalaVersion := "3.2.0"
 compileOrder := CompileOrder.JavaThenScala
 scalacOptions := Seq("-explain")
