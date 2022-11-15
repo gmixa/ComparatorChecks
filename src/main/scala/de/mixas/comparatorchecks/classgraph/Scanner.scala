@@ -72,11 +72,10 @@ private class Scanner(packageName: String) extends Scanning(packageName) with La
    * @return Some(field) when it is a Comparator else None
    */
   private final def extractComparators(info: FieldInfo) : Option[FieldInfo] =
-    if (info.getClassInfo.implementsInterface(classOf[Comparator[_]])) {
+    if info.getClassInfo.implementsInterface(classOf[Comparator[_]]) then
       Some(info)
-    } else {
+    else
       None
-    }
   end extractComparators
 
 
