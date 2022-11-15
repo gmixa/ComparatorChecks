@@ -17,7 +17,7 @@ releaseProcess := Seq(
   setNextVersion,
   commitNextVersion
 )
-scalaVersion := "3.2.0"
+scalaVersion := "3.2.1"
 compileOrder := CompileOrder.JavaThenScala
 scalacOptions := Seq("-explain")
 javacOptions := Seq("-parameters")
