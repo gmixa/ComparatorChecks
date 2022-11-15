@@ -193,7 +193,7 @@ private class Scanner(packageName: String) extends Scanning(packageName) with La
     end match
   end implementsComparable
 
-  /***
+  /**
    * determines the unique name of a method parameter if possible
    * @param info information about a method parameter
    * @return name that describes the parameters type
@@ -214,7 +214,16 @@ private class Scanner(packageName: String) extends Scanning(packageName) with La
     end match
   end className
 
+/**
+ * Factory for creating a Scanner
+ */
 object Scanner:
+
+  /**
+   * Creates a scanner for a specific package
+   * @param packageName the name of the package that will be analyzed
+   * @return scanner for further use
+   */
   def apply(packageName: String): Scanner =
     require(packageName != null, "null no legal package name")
     new Scanner(packageName)
