@@ -104,8 +104,19 @@ private class Scanner(packageName: String) extends Scanning(packageName) with La
   private def implementsComparable(signature: TypeSignature): Boolean =
     signature match
       case sig: ClassRefTypeSignature =>
+        /**
+         * ClassGraph does NOT scan internals of the jdk. Thats why we have to list all internal
+         * classes that we take into regard for evaluation. The classes here are all supposed to be comparable
+         * and end up as our base comparable elements. all non base non compareable classes are either sum or product classes
+         * built by recursive combination
+         */
         sig.getFullyQualifiedClassName match
           case "java.lang.Integer" => true
+          case "java.lang.String" => true
+          case "java.lang.Long" => true
+          case "java.lang.Short" => true
+          case "java.lang.Byte" => true
+          case "java.lang.Character" => true
           case _ => sig.getClassInfo.implementsInterface(classOf[Comparable[_]])
         end match
       case _ => false // jvm primitives can be compared but do not implement Comparable

@@ -20,6 +20,7 @@ import scala.util.Try
 private class ClassAttributeInspector(packageName : String) extends Scanning(packageName):
   /**
    * determines all fields of the given java class that we have to take regard of.
+   * Includes all Fields of all superclasses
    *
    * @param clazz java class definition
    * @return a sequence of all relevant class fields
@@ -34,7 +35,16 @@ private class ClassAttributeInspector(packageName : String) extends Scanning(pac
   end attributes
 end ClassAttributeInspector
 
+/**
+ * Factory for creating class Atrribute inspectors
+ */
 object ClassAttributeInspector:
+
+  /**
+   * Creates a Class Atrributinspector for inspecting classes
+    * @param packageName the package that contains all classes to evaluead
+   * @return the class Attrbute inspector
+   */
   def apply(packageName : String) : ClassAttributeInspector =
     new ClassAttributeInspector(packageName)
   end apply
