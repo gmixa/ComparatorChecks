@@ -38,14 +38,13 @@ class ScannerSpec extends AnyFlatSpec with should.Matchers{
         value.size should be(1)
   }
 
-  it should "find two lambdas defining a Comparator in the packafe 'tests' " in {
+  it should "find 3 lambdas defining a Comparator in the packafe 'tests' " in {
     val scanner = Scanner("tests")
     val found = scanner.allLambdasDefiningAComparator(true)
     found match
       case Failure(exception) => fail(exception)
       case Success(value) =>
-        println(value)
-        value.size should be(2)
+        value.size should be(3)
   }
 
 }

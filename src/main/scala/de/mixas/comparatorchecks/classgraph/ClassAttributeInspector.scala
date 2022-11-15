@@ -12,6 +12,8 @@ import scala.util.Try
  * If we want to generate random instances of a class we have to generate a set of classes
  * wich differ in these fields for testing.
  *
+ * @param packageName the package that has to be evaluated
+ *                    
  * @see
  * [[https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/builder/CompareToBuilder.html#reflectionCompare-java.lang.Object-java.lang.Object-]]
  * @author Gerald Mixa
@@ -36,14 +38,14 @@ private class ClassAttributeInspector(packageName : String) extends Scanning(pac
 end ClassAttributeInspector
 
 /**
- * Factory for creating class Atrribute inspectors
+ * Factory for creating class Attribute inspectors
  */
 object ClassAttributeInspector:
 
   /**
-   * Creates a Class Atrributinspector for inspecting classes
-    * @param packageName the package that contains all classes to evaluead
-   * @return the class Attrbute inspector
+   * Creates a class attribut inspector for inspecting classes
+    * @param packageName the package that contains all classes to be evaluated
+   * @return the class attribute inspector
    */
   def apply(packageName : String) : ClassAttributeInspector =
     new ClassAttributeInspector(packageName)

@@ -8,7 +8,6 @@ class ClassAttributeInspectorSpec extends AnyFlatSpec with should.Matchers {
 
   "ClassAttributeInspector.attributes" should "return a List of size 3 after evaluating MyTestClass" in {
     val attributeScanner = ClassAttributeInspector("tests")
-
     val attributes = attributeScanner.attributes(classOf[MyTestClass])
     attributes.get.size should be(5)
   }
@@ -18,7 +17,4 @@ class ClassAttributeInspectorSpec extends AnyFlatSpec with should.Matchers {
     val attributes = attributesScanner.attributes(classOf[MyTestSubClass])
     attributes.get.size should be(6)
   }
-
-
-
 }

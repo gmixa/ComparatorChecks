@@ -10,8 +10,23 @@ import scala.annotation.static
 import scala.jdk.CollectionConverters.*
 import scala.util.{Try, Using}
 import com.typesafe.scalalogging.LazyLogging
+import cats.*
+import cats.syntax.all.*
+
+/**
+ * a concrete scanner that is used to look up different classes that have
+ * some specific 'features' that we want to investigate further.
+ *
+ * @param packageName the package that is to be evaluated
+ */
 private class Scanner(packageName: String) extends Scanning(packageName) with LazyLogging :
 
+  /**
+   * determines all classes that implement the comparable interface
+   * @return Failure(exception) if there where technical problems while evaluating.
+   *         Success(foundClasses) all found comparable wrapped in a Success Object.
+   *         foundClasses can be empty if none were found and ther was no technical problem
+   */
   def allComparable(): Try[Set[Class[_ <: Comparable[_]]]] = using {
     scanResult =>
       val classes = scanResult.getClassesImplementing(classOf[Comparable[_]])
@@ -19,6 +34,11 @@ private class Scanner(packageName: String) extends Scanning(packageName) with La
       clazz.asScala.toSet
   }
 
+  /**
+   * determines all classes that implement the Comparator type
+   * @return Try wrapping the set of found results.
+   * @see [[allComparable]] for detailed return semantics
+   */
   def allComparators(): Try[Set[Class[_ <: Comparator[_]]]] = using {
     scanResult =>
       val classes = scanResult.getClassesImplementing(classOf[Comparator[_]])
@@ -26,6 +46,15 @@ private class Scanner(packageName: String) extends Scanning(packageName) with La
       clazz.asScala.toSet
   }
 
+  /**
+   * all fields of classes within the introspected class that refer to a
+   * Comparator. These comparators are of interest for further evaluation.
+   * Typical Scenario a class that "collects" different comparators for different
+   * desired sorts.
+   * @return Set of found fields that classes do contain and refer to a type implementing
+   *         Comparator interface
+   * @see [[allComparable]] for detailed return semantics
+   */
   def allFieldsDefiningComparators(): Try[Set[java.lang.reflect.Field]] = using {
     scanResult =>
       val fields: List[Option[FieldInfo]] = for {
@@ -34,10 +63,14 @@ private class Scanner(packageName: String) extends Scanning(packageName) with La
       } yield {
         extractComparators(field)
       }
-      println(fields)
       fields.filter( p => p.isDefined).map(p => p.get.loadClassAndGetField()).toSet
   }
 
+  /**
+   * checks if a field is a type implementing the Comparator interface
+   * @param info field to check
+   * @return Some(field) when it is a Comparator else None
+   */
   private final def extractComparators(info: FieldInfo) : Option[FieldInfo] =
     if (info.getClassInfo.implementsInterface(classOf[Comparator[_]])) {
       Some(info)
@@ -47,6 +80,11 @@ private class Scanner(packageName: String) extends Scanning(packageName) with La
   end extractComparators
 
 
+  /**
+   * checks if a field references some class object or is something else
+   * @param fieldTypeSignature signature of a class field
+   * @return true if the field canrefers to a classreference false else
+   */
   private final def checkForClassRefType(fieldTypeSignature: TypeSignature) : Boolean =
     fieldTypeSignature match
       case _: ClassRefTypeSignature => true
@@ -54,6 +92,13 @@ private class Scanner(packageName: String) extends Scanning(packageName) with La
     end match
   end checkForClassRefType
 
+  /**
+   * since java 8 a lambda also can define a comparator. lambdas have a special low level
+   * representation that make them no subclass of Comparator interface even if they "implement"
+   * it. That is why we have to use a different approach to detect these lambdas
+   * @param formalParametersAreComparable the lambda parameters are Compareable or not
+   * @return all lambdas that we expect to be a Comparable implementation.
+   */
   def allLambdasDefiningAComparator(formalParametersAreComparable : Boolean = false ) : Try[Set[MethodInfo]] = using{
     scanResult =>
       val suspiciousMethods : List[Option[MethodInfo]] = for {
@@ -65,6 +110,13 @@ private class Scanner(packageName: String) extends Scanning(packageName) with La
       suspiciousMethods.filter(_.isDefined).map(_.get).toSet
   }
 
+  /**
+   * criteria to test if a given method is a lambda method that can be seen as an "implementation"
+   * of the Comparator interface
+   * @param info method to be tested
+   * @param formalParametersAreComparable if we want the parameter of the lambda be itself comparable.
+   * @return Some(info) if tests are passed else None
+   */
   private final def extractRelevantLambdaMethods(info: MethodInfo,formalParametersAreComparable : Boolean) : Option[MethodInfo] =
     info match
       case methodInfo
@@ -74,6 +126,12 @@ private class Scanner(packageName: String) extends Scanning(packageName) with La
     end match
   end extractRelevantLambdaMethods
 
+  /**
+   * checks if a signature of a method could be seen as an implementation of a Comparator
+   * @param info method to be tested
+   * @param formalParametersAreComparable if formal parameters have to be comparable
+   * @return true if we "think" we found a lambda comparator
+   */
   private final def hasSignature(info: MethodInfo,formalParametersAreComparable : Boolean) : Boolean =
     val typeSignature: MethodTypeSignature = info.getTypeSignatureOrTypeDescriptor
     val isIntReturned = typeSignature.getResultType match
@@ -84,7 +142,7 @@ private class Scanner(packageName: String) extends Scanning(packageName) with La
     val (first,second) = (parameterInfo.headOption,parameterInfo.tail.headOption)
     val classNameOfFirstParameter = className(first)
     val classNameOfSecondParameter = className(second)
-    val parametersHaveSameType = classNameOfSecondParameter == classNameOfFirstParameter
+    val parametersHaveSameType = classNameOfSecondParameter === classNameOfFirstParameter
     if !formalParametersAreComparable then
       isIntReturned && hasTwoParameter && parametersHaveSameType
     else
@@ -93,22 +151,34 @@ private class Scanner(packageName: String) extends Scanning(packageName) with La
   end hasSignature
 
 
-  private def implementsComparable( methodInfo: Option[MethodParameterInfo]) : Boolean =
-    methodInfo match
-      case Some(value) => implementsComparable(value.getTypeSignature)
+  /**
+   * checks of a formal an optional existing formal parameter of a method is itself comparable
+   * @param methodParameterInfo parameter of a method that has to be evaluated further if it exists
+   * @return true if we have an existing formal parameter that is comparable else false
+   */
+  private def implementsComparable(methodParameterInfo: Option[MethodParameterInfo]) : Boolean =
+    methodParameterInfo match
+      case Some(value) => implementsComparable(value.getTypeSignatureOrTypeDescriptor)
       case None => false
     end match
   end implementsComparable
 
 
+  /**
+   * checks if we have a formal parameter that is comparable
+   * @param signature of a formal parameter
+   * @return true if comparable else false
+   */
   private def implementsComparable(signature: TypeSignature): Boolean =
     signature match
       case sig: ClassRefTypeSignature =>
         /**
-         * ClassGraph does NOT scan internals of the jdk. Thats why we have to list all internal
+         * ClassGraph does NOT scan internals of the jdk. That is why we have to list all internal
          * classes that we take into regard for evaluation. The classes here are all supposed to be comparable
-         * and end up as our base comparable elements. all non base non compareable classes are either sum or product classes
-         * built by recursive combination
+         * and end up as our base comparable elements. all non base non comparable classes are either sum or product classes
+         * built by recursive combination.
+         * As a consequence of the ClassGraph behaviour we have to list all jdk classes that are
+         * Comparable explicitly.
          */
         sig.getFullyQualifiedClassName match
           case "java.lang.Integer" => true
@@ -123,6 +193,11 @@ private class Scanner(packageName: String) extends Scanning(packageName) with La
     end match
   end implementsComparable
 
+  /***
+   * determines the unique name of a method parameter if possible
+   * @param info information about a method parameter
+   * @return name that describes the parameters type
+   */
   private def className(info: Option[MethodParameterInfo]): Option[String] =
     info match
       case None => None

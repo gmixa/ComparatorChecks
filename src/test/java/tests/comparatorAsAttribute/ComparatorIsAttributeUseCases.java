@@ -3,6 +3,7 @@ package tests.comparatorAsAttribute;
 import scala.Int;
 
 import java.util.Comparator;
+import java.util.function.BiFunction;
 
 public class ComparatorIsAttributeUseCases {
 
@@ -16,9 +17,10 @@ public class ComparatorIsAttributeUseCases {
         });
     }
 
-    public void compartorSetterViaLambda(){
+    public void comparatorSetterViaLambda(){
         ComparatorIsAttribute test = new ComparatorIsAttribute();
-        test.setComparatorAttribute( (Integer x, Integer y) -> y - x);
+        Comparator<Integer> lambda = (Integer y, Integer x) -> x+y;
+        test.setComparatorAttribute(lambda);
     }
 
 }

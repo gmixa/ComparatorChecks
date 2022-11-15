@@ -3,7 +3,7 @@ import sbt._
 object Dependencies {
 
   object Version {
-    val cats = "2.8.0"
+    val cats = "2.9.0"
     val scalaTest = "3.2.14"
     val scalaCheck = "1.17.0"
     val disciplineScalaCheck = "2.2.0"
@@ -18,6 +18,7 @@ object Dependencies {
     lazy val scalaTestPropSpec = "org.scalatest" %% "scalatest-propspec" % Version.scalaTest
     lazy val scalaCheck = "org.scalacheck" %% "scalacheck" % Version.scalaCheck
     lazy val disciplineScalaCheck = "org.typelevel" %% "discipline-scalatest" % Version.disciplineScalaCheck
+    lazy val cats = "org.typelevel" %% "cats-core" % Version.cats
     lazy val catsLaws = "org.typelevel" %% "cats-laws" % Version.cats
     lazy val catsKernelLaws = "org.typelevel" %% "cats-kernel-laws" % Version.cats
     lazy val classgraph = "io.github.classgraph" % "classgraph" % Version.classgraph

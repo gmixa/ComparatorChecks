@@ -20,8 +20,14 @@ releaseProcess := Seq(
 
 scalaVersion := "3.2.1"
 compileOrder := CompileOrder.JavaThenScala
-scalacOptions := Seq("-explain")
-javacOptions := Seq("-parameters")
+scalacOptions ++= Seq(
+  "-explain",
+  "-deprecation",
+  "-encoding", "UTF-8",
+  "-feature",
+  "-language:_",
+  "-optimize")
+javacOptions ++= Seq("-parameters")
 
 libraryDependencies ++= Seq(
   Libraries.scalaTest               % Test,
@@ -31,6 +37,7 @@ libraryDependencies ++= Seq(
   Libraries.disciplineScalaCheck    % Test,
   Libraries.catsLaws                % Test,
   Libraries.catsKernelLaws          % Test,
+  Libraries.cats,
   Libraries.classgraph,
   Libraries.scalaLogging,
   Libraries.logback
