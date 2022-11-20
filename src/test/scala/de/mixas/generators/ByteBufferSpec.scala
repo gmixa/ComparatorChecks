@@ -1,5 +1,17 @@
 package de.mixas.generators
 
-class ByteBufferSpec {
+import org.scalatest.Assertion
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
-}
+import java.nio.ByteBuffer
+
+class ByteBufferSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks:
+
+  val hasPositiveSize : ByteBuffer => Assertion = b => b.capacity() should be > 0
+
+  behavior of "ByteBufferGen"
+
+  it should "have arrays of size >0 " in forAll(ByteBufferGen.bytebuffer)(hasPositiveSize)
+end ByteBufferSpec

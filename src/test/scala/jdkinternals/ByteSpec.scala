@@ -2,7 +2,7 @@ package jdkinternals
 
 import cats.Order
 import cats.kernel.laws.discipline.OrderTests
-import de.mixas.generators.URIGen
+import de.mixas.generators.{ByteBufferGen, URIGen}
 import org.scalacheck.rng.Seed
 import org.scalacheck.{Arbitrary, Cogen, Gen}
 import org.scalatest.funsuite.AnyFunSuite
@@ -24,6 +24,10 @@ class ByteSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
   checkAll("java.lang.Byte", OrderTests[java.lang.Byte].order)
 
 class ByteBufferSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
+  given Arbitrary[java.nio.ByteBuffer] = Arbitrary(
+    ByteBufferGen.bytebuffer
+  )
+  given Cogen[java.nio.ByteBuffer] = Cogen(_.capacity())
 end ByteBufferSpec
 
 
