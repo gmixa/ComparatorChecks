@@ -4,7 +4,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 import tests.{MyTestClass, MyTestSubClass}
 
-class ClassAttributeInspectorSpec extends AnyFlatSpec with should.Matchers {
+class ClassAttributeInspectorSpec extends AnyFlatSpec with should.Matchers:
 
   "ClassAttributeInspector.attributes" should "return a List of size 3 after evaluating MyTestClass" in {
     val attributeScanner = ClassAttributeInspector("tests")
@@ -17,4 +17,4 @@ class ClassAttributeInspectorSpec extends AnyFlatSpec with should.Matchers {
     val attributes = attributesScanner.attributes(classOf[MyTestSubClass])
     attributes.get.size should be(6)
   }
-}
+

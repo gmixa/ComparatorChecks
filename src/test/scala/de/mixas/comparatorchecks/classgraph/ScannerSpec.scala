@@ -5,7 +5,7 @@ import org.scalatest.matchers.should
 
 import scala.util.{Failure, Success}
 
-class ScannerSpec extends AnyFlatSpec with should.Matchers{
+class ScannerSpec extends AnyFlatSpec with should.Matchers:
 
   "A Scanner" should "throw IllegalArgumentException if null is set as param type" in {
     a[IllegalArgumentException] should be thrownBy{
@@ -46,5 +46,3 @@ class ScannerSpec extends AnyFlatSpec with should.Matchers{
       case Success(value) =>
         value.size should be(3)
   }
-
-}
