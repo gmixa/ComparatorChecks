@@ -23,17 +23,9 @@ class ByteSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
   given Order[java.lang.Byte] = Order.fromOrdering(byteDefaultOrder)
   checkAll("java.lang.Byte", OrderTests[java.lang.Byte].order)
 
-class ByteBufferSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
-  given Arbitrary[java.nio.ByteBuffer] = Arbitrary(
-    ByteBufferGen.bytebuffer
-  )
-  given Cogen[java.nio.ByteBuffer] = Cogen(_.capacity())
-end ByteBufferSpec
-
-
 class CharBufferSpec
 
-class DoubelBufferSPec
+class DoubleBufferSpec
 
 class FloatBufferSpec
 

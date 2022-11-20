@@ -17,5 +17,3 @@ object URIGen:
       protocol <- Gen.frequency(protocolFrequency: _*)
       www <- Gen.oneOf("www.","")
     } yield URI(protocol+www+uri)
-
-

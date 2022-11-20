@@ -7,11 +7,11 @@ import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 import java.nio.ByteBuffer
 
-class ByteBufferSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks:
+class ByteBufferGenSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks:
 
   val hasPositiveSize : ByteBuffer => Assertion = b => b.capacity() should be > 0
 
   behavior of "ByteBufferGen"
 
   it should "have arrays of size >0 " in forAll(ByteBufferGen.bytebuffer)(hasPositiveSize)
-end ByteBufferSpec
+end ByteBufferGenSpec
