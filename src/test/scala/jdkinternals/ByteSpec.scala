@@ -2,12 +2,15 @@ package jdkinternals
 
 import cats.Order
 import cats.kernel.laws.discipline.OrderTests
+import de.mixas.generators.URIGen
 import org.scalacheck.rng.Seed
 import org.scalacheck.{Arbitrary, Cogen, Gen}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.prop.Configuration
 import org.typelevel.discipline.scalatest.FunSuiteDiscipline
 
+import java.math.BigInteger
+import java.net.URI
 import scala.collection.mutable
 
 class ByteSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
@@ -20,18 +23,9 @@ class ByteSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
   given Order[java.lang.Byte] = Order.fromOrdering(byteDefaultOrder)
   checkAll("java.lang.Byte", OrderTests[java.lang.Byte].order)
 
+class ByteBufferSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
+end ByteBufferSpec
 
-
-
-class BigDecimalSpec{
-
-}
-
-class BigIntegerSpec{}
-
-class URISpec{}
-
-class ByteBufferSpec
 
 class CharBufferSpec
 
