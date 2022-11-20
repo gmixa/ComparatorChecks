@@ -1,7 +1,7 @@
 package de.mixas.generators
 
-import org.scalacheck.Gen.freqTuple
 import org.scalacheck.Gen
+import org.scalacheck.Gen.freqTuple
 
 import scala.io.Source
 object URIGen:
