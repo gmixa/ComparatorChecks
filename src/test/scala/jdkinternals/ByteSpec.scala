@@ -2,7 +2,7 @@ package jdkinternals
 
 import cats.Order
 import cats.kernel.laws.discipline.OrderTests
-import de.mixas.generators.{ByteBufferGen, URIGen}
+import de.mixas.generators.{ByteBufferGen, CharBufferGen, DoubleBufferGen, URIGen}
 import org.scalacheck.rng.Seed
 import org.scalacheck.{Arbitrary, Cogen, Gen}
 import org.scalatest.funsuite.AnyFunSuite
@@ -22,10 +22,6 @@ class ByteSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
   val byteDefaultOrder: Ordering[java.lang.Byte] = ordered[java.lang.Byte]
   given Order[java.lang.Byte] = Order.fromOrdering(byteDefaultOrder)
   checkAll("java.lang.Byte", OrderTests[java.lang.Byte].order)
-
-class CharBufferSpec
-
-class DoubleBufferSpec
 
 class FloatBufferSpec
 
