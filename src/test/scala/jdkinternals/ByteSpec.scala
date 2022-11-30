@@ -2,7 +2,7 @@ package jdkinternals
 
 import cats.Order
 import cats.kernel.laws.discipline.OrderTests
-import de.mixas.generators.*
+import de.mixas.generators.ShortBufferGen
 import org.scalacheck.rng.Seed
 import org.scalacheck.{Arbitrary, Cogen, Gen}
 import org.scalatest.funsuite.AnyFunSuite
@@ -12,6 +12,7 @@ import org.typelevel.discipline.scalatest.FunSuiteDiscipline
 import java.math.BigInteger
 import java.net.URI
 import java.nio.ByteBuffer
+import java.time.LocalDate
 import scala.collection.mutable
 
 class ByteSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
@@ -25,15 +26,7 @@ class ByteSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
   checkAll("java.lang.Byte", OrderTests[java.lang.Byte].order)
 end ByteSpec
 
-class LongBufferSpec
 
-class ShortBufferSpec
-
-class CollationKeySpec
-
-class CollatorSpec
-
-class ChronoLocalDateSpec
 
 class ChronoLocalDateTimeSpec
 

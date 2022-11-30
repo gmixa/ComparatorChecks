@@ -18,7 +18,7 @@ releaseProcess := Seq(
   commitNextVersion
 )
 
-scalaVersion := "3.2.1"
+scalaVersion := Version.scalaVersion
 compileOrder := CompileOrder.JavaThenScala
 scalacOptions ++= Seq(
   "-explain",
@@ -36,6 +36,7 @@ libraryDependencies ++= Seq(
   Libraries.disciplineScalaCheck    % Test,
   Libraries.catsLaws                % Test,
   Libraries.catsKernelLaws          % Test,
+  Libraries.scalaCompiler,
   Libraries.cats,
   Libraries.classgraph,
   Libraries.scalaLogging,

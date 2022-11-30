@@ -7,9 +7,10 @@ object Dependencies {
     val scalaTest = "3.2.14"
     val scalaCheck = "1.17.0"
     val disciplineScalaCheck = "2.2.0"
-    val classgraph = "4.8.149"
-    val logback = "1.4.4"
+    val classgraph = "4.8.151"
+    val logback = "1.4.5"
     val scalaLogging = "3.9.5"
+    val scalaVersion = "3.2.1"
   }
 
   object Libraries {
@@ -24,6 +25,7 @@ object Dependencies {
     lazy val classgraph = "io.github.classgraph" % "classgraph" % Version.classgraph
     lazy val logback = "ch.qos.logback" % "logback-classic" % Version.logback
     lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" %  Version.scalaLogging
+    lazy val scalaCompiler = "org.scala-lang" %% "scala3-compiler" % "3.2.1"
   }
 
 }
