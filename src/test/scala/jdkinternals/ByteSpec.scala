@@ -12,8 +12,10 @@ import org.typelevel.discipline.scalatest.FunSuiteDiscipline
 import java.math.BigInteger
 import java.net.URI
 import java.nio.ByteBuffer
-import java.time.LocalDate
+import java.time.temporal.{ChronoUnit, TemporalUnit}
+import java.time.{Duration, Instant, LocalDate, LocalDateTime, LocalTime, ZoneOffset}
 import scala.collection.mutable
+import scala.math.Ordering.ordered
 
 class ByteSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
   given Arbitrary[java.lang.Byte] = Arbitrary(
@@ -25,20 +27,11 @@ class ByteSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
   given Order[java.lang.Byte] = Order.fromOrdering(byteDefaultOrder)
   checkAll("java.lang.Byte", OrderTests[java.lang.Byte].order)
 end ByteSpec
+class ChronologySpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
+end ChronologySpec
+class ChronoZonedDateTimeSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
+end ChronoZonedDateTimeSpec
 
-
-
-class ChronoLocalDateTimeSpec
-
-class ChronologySpec
-
-class ChronoZonedDateTimeSpec
-
-class DurationSpec
-
-class InstantSpec
-
-class LocalTimeSpec
 
 class MonthDaySpec
 
