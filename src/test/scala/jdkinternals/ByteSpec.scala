@@ -12,8 +12,9 @@ import org.typelevel.discipline.scalatest.FunSuiteDiscipline
 import java.math.BigInteger
 import java.net.URI
 import java.nio.ByteBuffer
-import java.time.temporal.{ChronoUnit, TemporalUnit}
-import java.time.{Duration, Instant, LocalDate, LocalDateTime, LocalTime, ZoneOffset}
+import java.time.chrono.IsoChronology
+import java.time.temporal.{ChronoField, ChronoUnit, TemporalUnit}
+import java.time.{Duration, Instant, LocalDate, LocalDateTime, LocalTime, MonthDay, OffsetDateTime, ZoneOffset}
 import scala.collection.mutable
 import scala.math.Ordering.ordered
 
@@ -32,12 +33,8 @@ end ChronologySpec
 class ChronoZonedDateTimeSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
 end ChronoZonedDateTimeSpec
 
-
-class MonthDaySpec
-
-class OffsetDateTimeSpec
-
-class OffsetTimeSpec
+class OffsetTimeSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
+end OffsetTimeSpec
 
 class YearSpec
 

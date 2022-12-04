@@ -16,3 +16,4 @@ class IntegerSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration
   val integerDefaultOrder: Ordering[java.lang.Integer] = ordered[java.lang.Integer]
   given Order[java.lang.Integer] = Order.fromOrdering(integerDefaultOrder)
   checkAll("java.lang.Integer",OrderTests[java.lang.Integer].order)
+end IntegerSpec
