@@ -36,7 +36,7 @@ class MonthDaySpec extends AnyFunSuite with FunSuiteDiscipline with Configuratio
     gen
   }
   )
-  given Cogen[java.time.MonthDay] = Cogen(_.getLong(ChronoField.DAY_OF_YEAR))
+  given Cogen[java.time.MonthDay] = Cogen(_.getLong(ChronoField.EPOCH_DAY))
   import scala.math.Ordering.*
   val defaultOrder: Ordering[MonthDay] = ordered[MonthDay]
   given Order[java.time.MonthDay] = Order.fromOrdering(defaultOrder)
