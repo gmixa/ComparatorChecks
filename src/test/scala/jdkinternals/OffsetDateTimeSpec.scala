@@ -29,10 +29,16 @@ class OffsetDateTimeSpec extends AnyFunSuite with FunSuiteDiscipline with Config
   val localTime: Gen[LocalTime] = Gen.chooseNum(0, 86399)
     .map(LocalTime.ofSecondOfDay(_))
   val zoneOffset: Gen[ZoneOffset] = for
-    hours <- Gen.chooseNum(-18, 18)
+    posneg <- Gen.oneOf(-1,1)
+    hours <- Gen.chooseNum(0, 17)
     minutes <- Gen.chooseNum(0, 59)
     seconds <- Gen.chooseNum(0, 59)
-  yield ZoneOffset.ofHoursMinutesSeconds(hours, minutes, seconds)
+  yield
+    if posneg == 1 then
+      ZoneOffset.ofHoursMinutesSeconds(hours, minutes, seconds)
+    else
+      ZoneOffset.ofHoursMinutesSeconds(-hours,-minutes,-seconds)
+    end if
 
   given Arbitrary[OffsetDateTime] = Arbitrary(for
     ld <- localDate
