@@ -13,13 +13,12 @@ import scala.util.Try
  * wich differ in these fields for testing.
  *
  * @param packageName the package that has to be evaluated
- *                    
  * @see
  * [[https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/builder/CompareToBuilder.html#reflectionCompare-java.lang.Object-java.lang.Object-]]
  * @author Gerald Mixa
  *
  */
-private class ClassAttributeInspector(packageName : String) extends Scanning(packageName):
+private class ClassAttributeInspector(packageName: String) extends Scanning(packageName):
   /**
    * determines all fields of the given java class that we have to take regard of.
    * Includes all Fields of all superclasses
@@ -44,10 +43,11 @@ object ClassAttributeInspector:
 
   /**
    * Creates a class attribut inspector for inspecting classes
-    * @param packageName the package that contains all classes to be evaluated
+   *
+   * @param packageName the package that contains all classes to be evaluated
    * @return the class attribute inspector
    */
-  def apply(packageName : String) : ClassAttributeInspector =
+  def apply(packageName: String): ClassAttributeInspector =
     new ClassAttributeInspector(packageName)
   end apply
 end ClassAttributeInspector

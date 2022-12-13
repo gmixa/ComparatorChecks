@@ -7,10 +7,11 @@ import scala.util.{Try, Using}
 /**
  * common functionality for the scanner and all inspectors
  */
-private trait Scanning(packageName : String):
+private trait Scanning(packageName: String):
   /**
    * handles the automatic resource management - autoclosing - of
    * the files that are evaluated
+   *
    * @tparam T result type of a scan
    * @return a ScanResult that is used to get the desired information
    */

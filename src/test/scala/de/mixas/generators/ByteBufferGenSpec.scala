@@ -9,7 +9,7 @@ import java.nio.ByteBuffer
 
 class ByteBufferGenSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks:
 
-  val hasPositiveSize : ByteBuffer => Assertion = b => b.capacity() should be > 0
+  val hasPositiveSize: ByteBuffer => Assertion = b => b.capacity() should be > 0
 
   behavior of "ByteBufferGen"
 

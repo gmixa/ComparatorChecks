@@ -24,7 +24,7 @@ object Dependencies {
     lazy val catsKernelLaws = "org.typelevel" %% "cats-kernel-laws" % Version.cats
     lazy val classgraph = "io.github.classgraph" % "classgraph" % Version.classgraph
     lazy val logback = "ch.qos.logback" % "logback-classic" % Version.logback
-    lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" %  Version.scalaLogging
+    lazy val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % Version.scalaLogging
     lazy val scalaCompiler = "org.scala-lang" %% "scala3-compiler" % "3.2.1"
   }
 

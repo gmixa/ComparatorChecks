@@ -7,7 +7,7 @@ import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 import java.nio.DoubleBuffer
 
-class DoubleBufferGenSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks :
+class DoubleBufferGenSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks:
 
   val hasPositiveSize: DoubleBuffer => Assertion = b => b.capacity() should be > 0
 

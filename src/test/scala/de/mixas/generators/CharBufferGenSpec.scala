@@ -9,7 +9,7 @@ import java.nio.{ByteBuffer, CharBuffer}
 
 class CharBufferGenSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks:
 
-  val hasPositiveSize : CharBuffer => Assertion = b => b.capacity() should be > 0
+  val hasPositiveSize: CharBuffer => Assertion = b => b.capacity() should be > 0
 
   behavior of "CharBufferGen"
 

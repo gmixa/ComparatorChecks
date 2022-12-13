@@ -14,11 +14,11 @@ public class ComparatorIsAttribute {
         this.myIntComparator = myIntComparator;
     }
 
-    public void setComparatorAttribute(Comparator<Integer> comparatorAttribute){
+    public void setComparatorAttribute(Comparator<Integer> comparatorAttribute) {
         this.comparatorAttribute = comparatorAttribute;
     }
 
-    void doSomthing(){
+    void doSomthing() {
         comparatorAttribute = (Integer a, Integer b) -> a - b;
     }
 }

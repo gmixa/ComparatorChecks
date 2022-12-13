@@ -5,11 +5,9 @@ import java.util.Objects;
 
 public class MyTestClass implements Comparable<MyTestClass> {
 
+    public final static int z = 0;
     private final int x;
     private final int y;
-
-    public final static int z = 0;
-
     public volatile int a;
 
     public transient String str;

@@ -1,13 +1,10 @@
 package tests.comparatorAsAttribute;
 
-import scala.Int;
-
 import java.util.Comparator;
-import java.util.function.BiFunction;
 
 public class ComparatorIsAttributeUseCases {
 
-    public void comparatorSetterViaAnonymousClass(){
+    public void comparatorSetterViaAnonymousClass() {
         ComparatorIsAttribute test = new ComparatorIsAttribute();
         test.setComparatorAttribute(new Comparator<Integer>() {
             @Override
@@ -17,9 +14,9 @@ public class ComparatorIsAttributeUseCases {
         });
     }
 
-    public void comparatorSetterViaLambda(){
+    public void comparatorSetterViaLambda() {
         ComparatorIsAttribute test = new ComparatorIsAttribute();
-        Comparator<Integer> lambda = (Integer y, Integer x) -> x+y;
+        Comparator<Integer> lambda = (Integer y, Integer x) -> x + y;
         test.setComparatorAttribute(lambda);
     }
 

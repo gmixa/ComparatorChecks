@@ -9,8 +9,8 @@ import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import java.nio.{FloatBuffer, IntBuffer}
 
 object IntBufferGen:
-  val intbuffer : Gen[IntBuffer] = Gen.containerOf[Array,Int](Gen.chooseNum(Int.MinValue,Int.MaxValue))
-    .map( u => IntBuffer.wrap(u)).suchThat(u => u.capacity() > 1)
+  val intbuffer: Gen[IntBuffer] = Gen.containerOf[Array, Int](Gen.chooseNum(Int.MinValue, Int.MaxValue))
+    .map(u => IntBuffer.wrap(u)).suchThat(u => u.capacity() > 1)
 end IntBufferGen
 
 

@@ -7,7 +7,7 @@ import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 import java.nio.ShortBuffer
 
-class ShortBufferGenSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks :
+class ShortBufferGenSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks:
   val hasPositiveSize: ShortBuffer => Assertion = b => b.capacity() should be > 0
 
   behavior of "LongBufferGen"

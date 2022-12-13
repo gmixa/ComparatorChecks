@@ -1,8 +1,9 @@
 import Dependencies._
 import sbtrelease.ReleaseStateTransformations._
+
 name := "ComparatorChecks"
 
-publishTo := Some(Resolver.file("file",  new File( "." )) )
+publishTo := Some(Resolver.file("file", new File(".")))
 
 releaseVersionFile := file("version.sbt")
 
@@ -29,13 +30,13 @@ scalacOptions ++= Seq(
 javacOptions ++= Seq("-parameters")
 
 libraryDependencies ++= Seq(
-  Libraries.scalaTest               % Test,
-  Libraries.scalaTestFunSuite       % Test,
-  Libraries.scalaTestPropSpec       % Test,
-  Libraries.scalaCheck              % Test,
-  Libraries.disciplineScalaCheck    % Test,
-  Libraries.catsLaws                % Test,
-  Libraries.catsKernelLaws          % Test,
+  Libraries.scalaTest % Test,
+  Libraries.scalaTestFunSuite % Test,
+  Libraries.scalaTestPropSpec % Test,
+  Libraries.scalaCheck % Test,
+  Libraries.disciplineScalaCheck % Test,
+  Libraries.catsLaws % Test,
+  Libraries.catsKernelLaws % Test,
   Libraries.scalaCompiler,
   Libraries.cats,
   Libraries.classgraph,

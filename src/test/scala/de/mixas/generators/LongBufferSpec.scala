@@ -7,7 +7,7 @@ import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 import java.nio.LongBuffer
 
-class LongBufferSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks :
+class LongBufferSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks:
 
   val hasPositiveSize: LongBuffer => Assertion = b => b.capacity() should be > 0
 

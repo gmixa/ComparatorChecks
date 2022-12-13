@@ -8,7 +8,6 @@ import org.scalatest.prop.Configuration
 import org.typelevel.discipline.scalatest.FunSuiteDiscipline
 import tests.MyTestClass
 
-import scala.math.Ordering
 
 class MyTestClassSpec extends AnyFunSuite with FunSuiteDiscipline with Configuration:
 

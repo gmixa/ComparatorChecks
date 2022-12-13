@@ -11,7 +11,7 @@ class URIGenSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks
 
   val uriPattern: Regex =
     """(https?|ftp|file)://(www.)?\p{Graph}+\.\p{Graph}{1,6}/?""".r
-  val isValidURI : String => Assertion = uriPattern.findAllMatchIn(_) should have size 1
+  val isValidURI: String => Assertion = uriPattern.findAllMatchIn(_) should have size 1
 
   behavior of "UriGen"
 

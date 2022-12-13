@@ -7,7 +7,7 @@ import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 import java.nio.IntBuffer
 
-class IntBufferGenSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks :
+class IntBufferGenSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks:
 
   val hasPositiveSize: IntBuffer => Assertion = b => b.capacity() should be > 0
 

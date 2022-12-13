@@ -7,7 +7,7 @@ import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 import java.nio.FloatBuffer
 
-class FloatBufferGenSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks :
+class FloatBufferGenSpec extends AnyFlatSpec with Matchers with ScalaCheckPropertyChecks:
 
   val hasPositiveSize: FloatBuffer => Assertion = b => b.capacity() should be > 0
 

@@ -1,14 +1,15 @@
 package de.mixas.comparatorchecks.classgraph
 
+import org.scalatest.PrivateMethodTester
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 
 import scala.util.{Failure, Success}
 
-class ScannerSpec extends AnyFlatSpec with should.Matchers:
+class ScannerSpec extends AnyFlatSpec with should.Matchers with PrivateMethodTester:
 
   "A Scanner" should "throw IllegalArgumentException if null is set as param type" in {
-    a[IllegalArgumentException] should be thrownBy{
+    a[IllegalArgumentException] should be thrownBy {
       Scanner(null.asInstanceOf[String])
     }
   }
@@ -46,3 +47,16 @@ class ScannerSpec extends AnyFlatSpec with should.Matchers:
       case Success(value) =>
         value.size should be(3)
   }
+
+  it should "identify all Methods for MyTestClass" in {
+    val scanner = Scanner("tests")
+    import tests.*
+    val clazz = new MyTestClass(3,4)
+    val methods = scanner.allMethodsOf(classOf[MyTestClass])
+    methods match
+      case Failure(exception) => fail(exception)
+      case Success(value) =>
+        value.size() should be(7)
+  }
+
+end ScannerSpec
