@@ -1,14 +1,15 @@
 package de.mixas.comparatorchecks.classgraph
 
+import org.scalatest.PrivateMethodTester
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 
 import scala.util.{Failure, Success}
 
-class ScannerSpec extends AnyFlatSpec with should.Matchers{
+class ScannerSpec extends AnyFlatSpec with should.Matchers with PrivateMethodTester:
 
   "A Scanner" should "throw IllegalArgumentException if null is set as param type" in {
-    a[IllegalArgumentException] should be thrownBy{
+    a[IllegalArgumentException] should be thrownBy {
       Scanner(null.asInstanceOf[String])
     }
   }
@@ -21,7 +22,7 @@ class ScannerSpec extends AnyFlatSpec with should.Matchers{
       case Success(value) => value.size should be(2)
   }
 
-  it should "find three classes implementing Comparator in the package 'tests' " in {
+  it should "find one class implementing Comparator in the package 'tests' " in {
     val scanner = Scanner("tests.comparatorAsAttribute")
     val found = scanner.allComparators()
     found match
@@ -29,24 +30,33 @@ class ScannerSpec extends AnyFlatSpec with should.Matchers{
       case Success(value) => value.size should be(1)
   }
 
-  it should "find all methods returning a Comparator in the package 'tests' " in {
+  it should "find one field returning a Comparator in the package 'tests' " in {
     val scanner = Scanner("tests.comparatorAsAttribute")
     val found = scanner.allFieldsDefiningComparators()
     found match
       case Failure(exception) => fail(exception)
       case Success(value) =>
-        println(value)
         value.size should be(1)
   }
 
-  ignore should "find all lambdas defining a Comparator in the packafe 'tests' " in {
-    val scanner = Scanner("tests.comparatorAsAttribute")
+  it should "find 3 lambdas defining a Comparator in the packafe 'tests' " in {
+    val scanner = Scanner("tests")
     val found = scanner.allLambdasDefiningAComparator(true)
     found match
       case Failure(exception) => fail(exception)
       case Success(value) =>
-        println(value)
-        value.size should be(2)
+        value.size should be(3)
   }
 
-}
+  it should "identify all Methods for MyTestClass" in {
+    val scanner = Scanner("tests")
+    import tests.*
+    val clazz = new MyTestClass(3,4)
+    val methods = scanner.allMethodsOf(classOf[MyTestClass])
+    methods match
+      case Failure(exception) => fail(exception)
+      case Success(value) =>
+        value.size() should be(7)
+  }
+
+end ScannerSpec

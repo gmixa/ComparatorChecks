@@ -1,12 +1,10 @@
 package tests.comparatorAsAttribute;
 
-import scala.Int;
-
 import java.util.Comparator;
 
 public class ComparatorIsAttributeUseCases {
 
-    public void comparatorSetterViaAnonymousClass(){
+    public void comparatorSetterViaAnonymousClass() {
         ComparatorIsAttribute test = new ComparatorIsAttribute();
         test.setComparatorAttribute(new Comparator<Integer>() {
             @Override
@@ -16,9 +14,10 @@ public class ComparatorIsAttributeUseCases {
         });
     }
 
-    public void compartorSetterViaLambda(){
+    public void comparatorSetterViaLambda() {
         ComparatorIsAttribute test = new ComparatorIsAttribute();
-        test.setComparatorAttribute( (Integer x, Integer y) -> y - x);
+        Comparator<Integer> lambda = (Integer y, Integer x) -> x + y;
+        test.setComparatorAttribute(lambda);
     }
 
 }
