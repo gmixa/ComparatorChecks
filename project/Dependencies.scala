@@ -7,7 +7,7 @@ object Dependencies {
     val scalaTest = "3.2.14"
     val scalaCheck = "1.17.0"
     val disciplineScalaCheck = "2.2.0"
-    val classgraph = "4.8.151"
+    val classgraph = "4.8.154"
     val logback = "1.4.5"
     val scalaLogging = "3.9.5"
     val scalaVersion = "3.2.1"
